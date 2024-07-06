@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Loading from "./_components/loading";
 
 export default function Home() {
   const [resume, setResume] = useState(null);
@@ -15,7 +16,7 @@ export default function Home() {
       });
   }, []);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loading />;
   if (!resume) return <p>No resume data</p>;
 
   return <main>{resume}</main>;

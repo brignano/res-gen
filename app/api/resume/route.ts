@@ -24,6 +24,7 @@ export async function GET() {
 
   const json = await response.json();
   let content;
+  
   try {
     content = json?.files?.[RESUME_FILE_NAME]?.content;
   } catch (e) {
