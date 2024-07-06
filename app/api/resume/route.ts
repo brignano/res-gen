@@ -1,31 +1,40 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import getConfig from "next/config";
 
-type ResponseData = {
-  resume: any;
-  error?: string;
-};
 
 export async function GET() {
   const { publicRuntimeConfig } = getConfig();
+
+  const RESUME_FILE_NAME = "resume.json";
+  const GIST_URL = `https://gist.github.com/${publicRuntimeConfig.gistId}`;
+
   const response = await fetch(
     `https://api.github.com/gists/${publicRuntimeConfig.gistId}`
   );
 
   if (!response.ok) {
-    throw new Error(`Failed to fetch GIST: ${publicRuntimeConfig.gistId}`);
+    return new Response(
+      `Could not find Gist. Please validate this Gist exists and is public (not secret): ${GIST_URL}`,
+      {
+        status: StatusCodes.NOT_FOUND,
+        statusText: ReasonPhrases.NOT_FOUND,
+      }
+    );
   }
 
   const json = await response.json();
   let content;
   try {
-    content = json?.files?.["resume.jso"].content;
+    content = json?.files?.[RESUME_FILE_NAME]?.content;
   } catch (e) {
-    return new Response("test", {
-      status: 500,
-      statusText: "Error",
-    });
+    return new Response(
+      `File (${RESUME_FILE_NAME}) does not exist in Gist: ${GIST_URL}`,
+      {
+        status: StatusCodes.NOT_FOUND,
+        statusText: ReasonPhrases.NOT_FOUND,
+      }
+    );
   }
 
-  return Response.json({ resume: content });
+  return Response.json(content);
 }

@@ -10,7 +10,7 @@ export default function Home() {
     fetch("/api/resume")
       .then((res) => res.json())
       .then((data) => {
-        setResume(data.resume);
+        setResume(data);
         setLoading(false);
       });
   }, []);
