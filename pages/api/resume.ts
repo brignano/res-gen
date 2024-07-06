@@ -10,7 +10,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>
 ) {
-  const { publicRuntimeConfig, serverRuntimeConfig } = getConfig();
+  const { publicRuntimeConfig } = getConfig();
   const response = await fetch(
     `https://api.github.com/gists/${publicRuntimeConfig.gistId}`
   );
