@@ -1,7 +1,5 @@
 "use client";
 
-import getConfig from "next/config";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export default function Home() {
