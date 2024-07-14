@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     publicRuntimeConfig: {
-        gistId: process.env.GIST_ID
+        jsonResumeUrl: process.env.JSON_RESUME_URL
     }
 };
 

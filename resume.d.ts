@@ -3,7 +3,7 @@ export type Location = {
   state: string;
 };
 
-export type Info = {
+export type About = {
   name: string;
   title: string;
   image: string;
@@ -47,7 +47,7 @@ export type Social = {
 };
 
 export type Resume = {
-  info: Info;
+  about: About;
   jobs: Job[];
   skills: Skill[];
   interest: Interest[];
