@@ -43,7 +43,6 @@ export type Skill = Interest & {
 export type Social = {
   site: string;
   username: string;
-  url: string;
 };
 
 export type Resume = {
