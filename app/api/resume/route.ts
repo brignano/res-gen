@@ -6,6 +6,10 @@ import getConfig from "next/config";
 export async function GET() {
   const { publicRuntimeConfig } = getConfig();
 
+  if (!publicRuntimeConfig.jsonResumeUrl) {
+    logger.error(`Failed to find environment variable: JSON_RESUME_URL`);
+  }
+
   const response = await fetch(publicRuntimeConfig.jsonResumeUrl);
 
   if (!response.ok) {

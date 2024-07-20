@@ -1,11 +1,18 @@
 import About from "@/app/_components/_about/about";
-import type { Resume } from "@/resume";
+import { parseResume } from "@/app/_utils/resume-schema";
+
+const getResume = async () => {
+  const response = await fetch(process.env.API_URL + `/resume`, {
+    next: {
+      cache: "no-cache",
+    },
+  });
+  const resumeJson = await response.json();
+  return parseResume(resumeJson);
+};
 
 export default async function Resume() {
-  const response = await fetch(`http://localhost:3000/api/resume`, {
-    next: { revalidate: 120 },
-  });
-  const resume = (await response.json()) as Resume;
+  const resume = await getResume();
 
   return (
     <main>

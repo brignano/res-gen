@@ -1,12 +1,11 @@
-import { About as AboutType } from "@/resume";
 import LoadingSpinner from "@/app/_components/loading-spinner";
 import { PhotoIcon } from "@heroicons/react/20/solid";
 import SocialIcons from "@/app/_components/_about/social-icons";
-import Image from "next/image";
 import { Metadata } from "next";
+import { AboutSchema } from "@/app/_utils/resume-schema";
 
 interface AboutProps {
-  about?: AboutType;
+  about?: AboutSchema;
 }
 
 // set dynamic metadata
@@ -33,7 +32,10 @@ export default function About(props: AboutProps) {
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 py-12">
             <div className="flex items-center gap-x-6">
-              <Image
+              {/* 
+              todo: update to use Image, dynamically set remotePatterns in next.config.mjs 
+                */}
+              <img
                 style={imageStyle}
                 src={about.image}
                 alt="Selfie"
