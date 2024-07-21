@@ -62,7 +62,7 @@ jobs:
         env:
           API_URL: "https://${{ github.actor }}.github.io/${{ github.event.repository.name }}"
           JSON_RESUME_URL: ${{ vars.JSON_RESUME_URL }}
-          GOOGLE_API_KEY: ${{ secrets.GOOGLE_MAPS_KEY }}
+          GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_KEY }}
           LOG_LEVEL: info
         run: npm run build
       - name: Upload artifact
