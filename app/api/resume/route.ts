@@ -1,20 +1,32 @@
 import { logger } from "@/app/_utils/logger";
-import { Resume } from "@/resume";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import getConfig from "next/config";
+import { parseResume } from "@/app/_utils/schemas";
 
 export async function GET() {
   const { publicRuntimeConfig } = getConfig();
 
   if (!publicRuntimeConfig.jsonResumeUrl) {
-    logger.error(`Failed to find environment variable: JSON_RESUME_URL`);
+    return new Response(
+      `Failed to find environment variable: JSON_RESUME_URL`,
+      {
+        status: StatusCodes.INTERNAL_SERVER_ERROR,
+        statusText: ReasonPhrases.INTERNAL_SERVER_ERROR,
+      }
+    );
   }
 
-  const response = await fetch(publicRuntimeConfig.jsonResumeUrl);
+  logger.info("Fetching resume...");
+  logger.debug(publicRuntimeConfig.jsonResumeUrl);
+
+  const response = await fetch(publicRuntimeConfig.jsonResumeUrl, {
+    //! todo: remove cache strategy
+    cache: "no-cache",
+  });
 
   if (!response.ok) {
     return new Response(
-      `Failed to find Resume. Please validate the URL exists and is publically accessible: ${publicRuntimeConfig.jsonResumeUrl}`,
+      `Failed to GET JSON file. Please validate the URL exists (and is publically accessible): ${publicRuntimeConfig.jsonResumeUrl}`,
       {
         status: StatusCodes.NOT_FOUND,
         statusText: ReasonPhrases.NOT_FOUND,
@@ -23,12 +35,11 @@ export async function GET() {
   }
 
   try {
-    const jsonResume = await response.json();
-    logger.debug(`jsonResume: ${JSON.stringify(jsonResume, null, 2)}`);
-    return Response.json(jsonResume as Resume);
+    const resume = await parseResume(await response.json());
+    return Response.json(resume);
   } catch (e) {
     return new Response(
-      `Failed to parse JSON. Please validate the file is in a validate JSON format: ${publicRuntimeConfig.jsonResumeUrl}`,
+      `${(e as Error).message}: ${publicRuntimeConfig.jsonResumeUrl}`,
       {
         status: StatusCodes.NOT_FOUND,
         statusText: ReasonPhrases.NOT_FOUND,

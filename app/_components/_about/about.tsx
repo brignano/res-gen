@@ -1,8 +1,8 @@
 import LoadingSpinner from "@/app/_components/loading-spinner";
 import { PhotoIcon } from "@heroicons/react/20/solid";
-import SocialIcons from "@/app/_components/_about/social-icons";
+import Socials from "@/app/_components/_about/socials";
 import { Metadata } from "next";
-import { AboutSchema } from "@/app/_utils/resume-schema";
+import { AboutSchema } from "@/app/_utils/schemas";
 
 interface AboutProps {
   about?: AboutSchema;
@@ -35,18 +35,19 @@ export default function About(props: AboutProps) {
               {/* 
               todo: update to use Image, dynamically set remotePatterns in next.config.mjs 
                 */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 style={imageStyle}
-                src={about.image}
+                src={about.image_url}
                 alt="Selfie"
-                width={50}
-                height={50}
+                width={90}
               />
+
               <div className="container">
                 <h1 className="pb-1 text-3xl md:text-5xl font-semibold font-mono leading-7 text-gray-900">
                   {about.name}
                 </h1>
-                <SocialIcons email={about.email} socials={about.socials} />
+                <Socials social_urls={about.social_urls} />
               </div>
             </div>
 
