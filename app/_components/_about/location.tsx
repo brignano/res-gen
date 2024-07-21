@@ -14,7 +14,7 @@ export default function Location(props: LocationProps) {
           width="600"
           height="450"
           style={{ border: 0 }}
-          src={`https://www.google.com/maps/embed/v1/place?q=${location.city},${location.state},${location.country}&key=${servercon}`}
+          src={`https://www.google.com/maps/embed/v1/place?q=${location.city},${location.state},${location.country}&key=${process.env.GOOGLE_API_KEY}`}
         />
       </div>
       <div>
