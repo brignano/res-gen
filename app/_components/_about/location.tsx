@@ -1,7 +1,7 @@
 import { LocationSchema } from "@/app/_utils/schemas";
 
 interface LocationProps {
-  location: LocationSchema;
+  location?: LocationSchema;
 }
 
 export default function Location(props: LocationProps) {
