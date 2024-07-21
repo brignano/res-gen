@@ -1,22 +1,35 @@
 import About from "@/app/_components/_about/about";
-import { Suspense } from "react";
-import LoadingSpinner from "./_components/loading-spinner";
 import { parseResume } from "./_utils/schemas";
 import getConfig from "next/config";
+import LoadingSpinner from "./_components/loading-spinner";
+import { Suspense } from "react";
+import { logger } from "./_utils/logger";
 
-const getResume = async () => {
-  const response = await fetch(process.env.API_URL + `/resume`, {
+async function getResume() {
+  const { publicRuntimeConfig } = getConfig();
+
+  if (!publicRuntimeConfig.jsonResumeUrl) {
+    logger.warn(`Failed to find environment variable: JSON_RESUME_URL`);
+  }
+
+  logger.info("Fetching resume...");
+  logger.debug(publicRuntimeConfig.jsonResumeUrl);
+
+  const response = await fetch(publicRuntimeConfig.jsonResumeUrl, {
     //! todo: remove cache strategy
     cache: "no-cache",
   });
 
   if (!response.ok) {
-    return null;
+    logger.error(`Failed to GET JSON file. Please validate the URL exists (and is publically accessible): ${publicRuntimeConfig.jsonResumeUrl}`);
   }
 
-  // return await response.json();
-  return parseResume(await response.json());
-};
+  try {
+    return await parseResume(await response.json());
+  } catch (e) {
+    logger.error(e);
+  }
+}
 
 export default async function Resume() {
   const { publicRuntimeConfig } = getConfig();
