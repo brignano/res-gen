@@ -24,6 +24,7 @@ const nextConfig = {
     images: {
         unoptimized: true,
     },
+    assetPrefix: "./",
     publicRuntimeConfig: {
         jsonResumeUrl: process.env.JSON_RESUME_URL
     },
