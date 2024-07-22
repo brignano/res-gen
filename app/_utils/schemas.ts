@@ -25,7 +25,7 @@ const JobSchema = z.object({
   title: z.string(),
   location: LocationSchema,
   startDate: z.date(),
-  endDate: z.date(),
+  endDate: z.optional(z.date()),
   url: z.string(),
   summary: z.string(),
   highlights: z.array(z.string()),
