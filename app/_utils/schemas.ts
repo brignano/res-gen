@@ -28,7 +28,7 @@ const JobSchema = z.object({
   endDate: z.optional(z.date()),
   url: z.string(),
   summary: z.string(),
-  highlights: z.array(z.string()),
+  accomplishments: z.array(z.string()),
 });
 
 export type LevelSchema = z.infer<typeof LevelSchema>;
