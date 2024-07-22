@@ -29,7 +29,7 @@ const nextConfig = {
         jsonResumeUrl: process.env.JSON_RESUME_URL
     },
     serverRuntimeConfig: {
-        googleApiKey: process.env.GOOGLE_MAPS_API_KEY
+        googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY
     }
 };
 

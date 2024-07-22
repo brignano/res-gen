@@ -1,5 +1,6 @@
 import { LocationSchema } from "@/app/_utils/schemas";
 import LoadingSpinner from "../loading-spinner";
+import getConfig from "next/config";
 
 interface LocationProps {
   location?: LocationSchema;
@@ -8,7 +9,11 @@ interface LocationProps {
 export default function Location(props: LocationProps) {
   const { location } = props;
 
-  if (!location) {
+  const { serverRuntimeConfig } = getConfig();
+
+  if (!serverRuntimeConfig.googleMapsApiKey) {
+    return <></>;
+  } else if (!location) {
     return <LoadingSpinner />;
   }
 
@@ -18,9 +23,7 @@ export default function Location(props: LocationProps) {
       height="275"
       style={{ border: 0 }}
       loading="lazy"
-      src={`https://www.google.com/maps/embed/v1/place?q=${location.city},${location.state},${location.country}&key=${process.env.GOOGLE_MAPS_API_KEY}`}
-      allowFullScreen={true}
-      referrerPolicy="no-referrer-when-downgrade"
+      src={`https://www.google.com/maps/embed/v1/place?q=${location.city},${location.state},${location.country}&key=${serverRuntimeConfig.googleMapsApiKey}`}
     />
   );
 }
