@@ -60,10 +60,8 @@ jobs:
         run: npm test --if-present
       - name: Build
         env:
-          API_URL: "https://${{ github.actor }}.github.io/${{ github.event.repository.name }}"
           JSON_RESUME_URL: ${{ vars.JSON_RESUME_URL }}
-          GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_KEY }}
-          LOG_LEVEL: info
+          GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
         run: npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
