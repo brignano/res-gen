@@ -34,25 +34,18 @@ const JobSchema = z.object({
 export type LevelSchema = z.infer<typeof LevelSchema>;
 const LevelSchema = z.enum(["Basic", "Intermediate", "Advanced"]);
 
-export type InterestSchema = z.infer<typeof InterestSchema>;
-const InterestSchema = z.object({
-  name: z.string(),
-  keywords: z.array(z.string()),
-});
-
 export type SkillSchema = z.infer<typeof SkillSchema>;
-const SkillSchema = InterestSchema.merge(
-  z.object({
-    level: LevelSchema,
-  })
-);
+const SkillSchema = z.object({
+  name: z.string(),
+  level: LevelSchema,
+});
 
 export type ResumeSchema = z.infer<typeof ResumeSchema>;
 export const ResumeSchema = z.object({
   about: AboutSchema,
   jobs: z.optional(z.array(JobSchema)),
   skills: z.optional(z.array(SkillSchema)),
-  interest: z.optional(z.array(InterestSchema)),
+  interest: z.optional(z.array(z.string())),
 });
 
 /**
