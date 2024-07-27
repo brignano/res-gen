@@ -60,7 +60,7 @@ jobs:
         run: npm test --if-present
       - name: Build
         env:
-          JSON_RESUME_URL: ${{ vars.JSON_RESUME_URL }}
+          NEXT_PUBLIC_JSON_RESUME_URL: ${{ vars.JSON_RESUME_URL }}
           GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
         run: npm run build
       - name: Upload artifact
