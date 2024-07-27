@@ -1,6 +1,9 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    pageExtensions: [
+        'page.tsx',
+    ],
     publicRuntimeConfig: {
         jsonResumeUrl: process.env.NEXT_PUBLIC_JSON_RESUME_URL
     },
