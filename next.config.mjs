@@ -1,7 +1,6 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    skipTrailingSlashRedirect: true,
     publicRuntimeConfig: {
         jsonResumeUrl: process.env.NEXT_PUBLIC_JSON_RESUME_URL
     },
