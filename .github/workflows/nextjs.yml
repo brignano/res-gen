@@ -58,10 +58,12 @@ jobs:
         run: npm ci
       - name: Test
         run: npm test --if-present
+      - name: Update .env
+        run: |
+          echo "NEXT_PUBLIC_JSON_RESUME_URL=${{ secrets.JSON_RESUME_URL }}" > .env
+          echo "GOOGLE_MAPS_API_KEY=${{ secrets.GOOGLE_MAPS_API_KEY }}" >> .env
+          cat .env
       - name: Build
-        env:
-          NEXT_PUBLIC_JSON_RESUME_URL: ${{ vars.JSON_RESUME_URL }}
-          GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
         run: npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
